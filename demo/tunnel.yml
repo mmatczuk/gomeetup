@@ -1,0 +1,12 @@
+server_addr: mmatczuk.hopto.org:4443
+insecure_skip_verify: true
+tunnels:
+  hook:
+    proto: http
+    addr: localhost:8080
+    auth: user:password
+    host: mmatczuk.hopto.org
+  ssh:
+    proto: tcp
+    addr: 52.213.177.165:22
+    remote_addr: 0.0.0.0:2222
