@@ -1,0 +1,85 @@
+Reverse HTTP tunnels
+30 Mar 2017
+
+Michał Matczuk
+Codilime
+@michalmatczuk
+
+* ”I want to expose a local server behind a NAT or firewall to the internet.”
+
+.image fw.png
+
+* Demo without deploying
+
+Don’t constantly redeploy your in-progress work to get feedback from clients. ngrok creates a secure public URL (https://yourapp.ngrok.io) to a local webserver on your machine. Iterate quickly with immediate feedback without interrupting flow.
+
+Hackaton?
+
+* Simplify mobile device testing
+
+Test mobile apps against a development backend running on your machine. Point ngrok at your local dev server and then configure your app to use the ngrok URL. It won't change, even when you change networks.
+
+* Build webhook integrations with ease
+
+Building webhook integrations can be a pain: it requires a public address and a lot of set up to trigger hooks. Save yourself time and frustration with ngrok. Inspect the HTTP traffic flowing over your tunnel. Then, replay webhook requests with one click to iterate quickly while staying in context.
+
+* Run personal cloud services from your own private network
+
+Own your data. Host personal cloud services on your own private network. Run webmail, file syncing, and more securely on your hardware with full end-to-end encryption.
+
+* Meet ngrok
+
+.image ngrok.png
+
+.link https://ngrok.com/
+
+* ”Use ngrok link to manage your IoT devices or as a lightweight alternative to VPN for targeted access into customer networks.”
+
+.image vpnalt.png
+
+* man ssh
+
+-R [bind_address:]port:host:hostport
+
+Specifies that the given port on the remote (server) host is to be forwarded to the given host and port on the local side. This works by allocating a socket to listen to port on the remote side, and whenever a connection is made to this port, the connection is forwarded over the secure channel, and a connection is made to host port hostport from the local machine.
+
+* in practice
+
+ssh -i "aws.pem" \
+-R 0.0.0.0:9000:localhost:4000 \
+-R 0.0.0.0:9001:localhost:4001 \
+-R 0.0.0.0:9002:localhost:4002 \
+-R 0.0.0.0:9003:localhost:4003 \
+-R 0.0.0.0:9004:localhost:4004 \
+-R 0.0.0.0:9005:localhost:4005 \
+…
+-N \
+-f \
+public.host.com
+
+* Multiplexing?
+
+”This requires forwarding one port per remote system on the server. When 100+ remotes connect, do I have any options other than opening 100+ ports in the server firewall and statically assigning each remote to a port as above? My goal is to enable multiple remotes to create tunnels on demand, where I can query who is connected.”
+
+.link http://serverfault.com/questions/606680/multiple-reverse-ssh-tunnels-using-single-port
+
+* HTTP tunnels
+
+.image search.png
+
+* Why another tunnel?
+
+.image spike.png
+
+.link https://github.com/mmatczuk/tunnel-benchmark
+
+* go-http-tunnel
+
+- TCP, HTTP (WebSockets comming soon)
+- TLS client / server connection
+- HTTP basic auth
+- fast, with good degradation thanks to HTTP/2
+- reconnect with exponential backoff
+- yaml configuration
+
+* Demo
